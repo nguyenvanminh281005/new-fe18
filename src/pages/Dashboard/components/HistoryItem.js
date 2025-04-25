@@ -1,0 +1,57 @@
+// HistoryItem.js
+import React from 'react';
+import styles from '../../../css/Dashboard.module.css';
+
+function HistoryItem({ 
+  item, 
+  featureNames, 
+  loadFromHistory, 
+  deleteHistoryItem,
+  setShowHistory
+}) {
+  return (
+    <div 
+      className={`${styles.historyItem} ${item.prediction === 'Positive' ? styles.historyPositive : styles.historyNegative}`}
+    >
+      <div className={styles.historyInfo}>
+        <span className={styles.historyTimestamp}>{item.timestamp}</span>
+        <span className={styles.historyResult}>Result: <strong>{item.prediction}</strong></span>
+      </div>
+      
+      <div className={styles.historyFeatures}>
+        {item.features.map((value, idx) => (
+          <div key={idx} className={styles.historyFeature}>
+            <span>{featureNames[idx] || `F${idx + 1}`}: </span>
+            <span>{value}</span>
+          </div>
+        ))}
+      </div>
+      
+      <div className={styles.historyActions}>
+        <button 
+          className={styles.loadButton} 
+          onClick={() => loadFromHistory(item)}
+        >
+          Load
+        </button>
+        <button 
+          className={styles.deleteButton} 
+          onClick={() => deleteHistoryItem(item.id)}
+        >
+          Delete
+        </button>
+        <button 
+          className={styles.shareButton} 
+          onClick={() => {
+            loadFromHistory(item);
+            setShowHistory(false);
+          }}
+        >
+          Share
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default HistoryItem;
