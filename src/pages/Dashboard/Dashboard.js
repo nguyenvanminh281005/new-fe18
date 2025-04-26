@@ -10,6 +10,7 @@ import Navigation from './components/Navigation';
 import PredictionForm from './components/PredictionForm';
 import HistoryPanel from './components/HistoryPanel';
 import ResultDisplay from './components/ResultDisplay';
+import AdviceSection from './components/AdviceSection';
 import EmailSharingFeature from '../EmailSharing/EmailSharingFeature';
 
 function Dashboard() {
@@ -22,8 +23,9 @@ function Dashboard() {
   const [showHistory, setShowHistory] = useState(false);
   const [error, setError] = useState('');
   const { currentUser, logout } = useAuth();
-  const [advice, setAdvice] = useState('');
+  const [adviceList, setAdviceList] = useState([]);
   const [adviceError, setAdviceError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -197,35 +199,46 @@ function Dashboard() {
       userId: currentUser?.id || 'Unknown'
     };
   };
-
-  const [adviceList, setAdviceList] = useState([
-    {
-      title: "Lời khuyên 1",
-      details: "Chi tiết lời khuyên đầu tiên."
-    },
-    {
-      title: "Lời khuyên 2",
-      details: "Chi tiết lời khuyên thứ hai."
-    }
-  ]);
-
+  
   const handleGetAdvice = async () => {
     try {
-      setAdvice('');
+      setAdviceList([]);
       setAdviceError('');
+      setLoading(true);
+      
       const response = await axios.post('http://127.0.0.1:5000/auth/get_advice', {
         features: features.map(Number),
-        prediction: result,
+        prediction: result === 'Parkinson Detected' ? 1 : 0,
         userId: currentUser.id
       });
-      setAdvice(response.data.advice);
+      
+      // Kiểm tra nếu response.data.advice là chuỗi JSON
+      if (typeof response.data.advice === 'string') {
+        try {
+          // Cố gắng parse chuỗi JSON
+          const parsedAdvice = JSON.parse(response.data.advice);
+          if (Array.isArray(parsedAdvice)) {
+            setAdviceList(parsedAdvice);
+          } else {
+            setAdviceError('Định dạng lời khuyên không hợp lệ');
+          }
+        } catch (parseError) {
+          console.error('Lỗi khi parse JSON:', parseError);
+          setAdviceError('Không thể xử lý dữ liệu lời khuyên');
+        }
+      } else if (Array.isArray(response.data.advice)) {
+        // Nếu đã là mảng object
+        setAdviceList(response.data.advice);
+      } else {
+        setAdviceError('Định dạng lời khuyên không hợp lệ');
+      }
     } catch (error) {
       console.error('Lỗi khi lấy lời khuyên:', error);
-      setAdvice('');
       setAdviceError('Không thể lấy lời khuyên. Vui lòng thử lại sau.');
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   return (
     <>
@@ -271,37 +284,18 @@ function Dashboard() {
             
             {result && (
             <>
-              <ResultDisplay 
-                result={result} 
-                onGetAdvice={result === 'Parkinson Detected' ? handleGetAdvice : null} 
+              <ResultDisplay result={result} />
+              
+              {/* Component lời khuyên mới */}
+              <AdviceSection
+                features={features}
+                result={result}
+                currentUser={currentUser}
               />
-
-              {adviceList && adviceList.length > 0 && (
-                    <div className={styles.adviceBox}>
-                      <h3>Lời khuyên từ chuyên gia:</h3>
-                      <ul>
-                        {adviceList.map((advice, index) => (
-                          <li key={index} style={{ marginBottom: '1em' }}>
-                            <strong>{advice.title}</strong>
-                            <p>{advice.details}</p>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-              )}
-
-
-              {adviceError && (
-                <div className={styles.adviceErrorBox}>
-                  {adviceError}
-                </div>
-              )}
+              
+              <EmailSharingFeature predictionData={getCurrentPredictionData()} />
             </>
             )}
-
-
-            
-            {result && <EmailSharingFeature predictionData={getCurrentPredictionData()} />}
           </div>
         ) : (
           <HistoryPanel
