@@ -265,25 +265,19 @@ function Dashboard() {
                 onGetAdvice={result === 'Parkinson Detected' ? handleGetAdvice : null} 
               />
 
-              {advice && (
-                <div className={styles.adviceBox}>
-                  <h3>Lời khuyên từ chuyên gia:</h3>
-                  {advice.split('\n').map((line, index) => (
-                    <React.Fragment key={index}>
-                      {line.split('**').map((part, partIndex) => {
-                        if (partIndex % 2 === 1) {
-                          // Nếu index lẻ, đây là phần text cần in đậm
-                          return <strong key={partIndex}>{part}</strong>;
-                        } else {
-                          // Nếu index chẵn, đây là phần text bình thường
-                          return part;
-                        }
-                      })}
-                      <br />
-                    </React.Fragment>
+            {adviceList && adviceList.length > 0 && (
+              <div className={styles.adviceBox}>
+                <h3>Lời khuyên từ chuyên gia:</h3>
+                <ul>
+                  {adviceList.map((advice, index) => (
+                    <li key={index} style={{ marginBottom: '1em' }}>
+                      <strong>{advice.title}</strong>
+                      <p>{advice.details}</p>
+                    </li>
                   ))}
-                </div>
-              )}
+                </ul>
+              </div>
+            )}
 
 
               {adviceError && (
