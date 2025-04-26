@@ -198,6 +198,17 @@ function Dashboard() {
     };
   };
 
+  const [adviceList, setAdviceList] = useState([
+    {
+      title: "Lời khuyên 1",
+      details: "Chi tiết lời khuyên đầu tiên."
+    },
+    {
+      title: "Lời khuyên 2",
+      details: "Chi tiết lời khuyên thứ hai."
+    }
+  ]);
+
   const handleGetAdvice = async () => {
     try {
       setAdvice('');
@@ -265,19 +276,19 @@ function Dashboard() {
                 onGetAdvice={result === 'Parkinson Detected' ? handleGetAdvice : null} 
               />
 
-            {adviceList && adviceList.length > 0 && (
-              <div className={styles.adviceBox}>
-                <h3>Lời khuyên từ chuyên gia:</h3>
-                <ul>
-                  {adviceList.map((advice, index) => (
-                    <li key={index} style={{ marginBottom: '1em' }}>
-                      <strong>{advice.title}</strong>
-                      <p>{advice.details}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+              {adviceList && adviceList.length > 0 && (
+                    <div className={styles.adviceBox}>
+                      <h3>Lời khuyên từ chuyên gia:</h3>
+                      <ul>
+                        {adviceList.map((advice, index) => (
+                          <li key={index} style={{ marginBottom: '1em' }}>
+                            <strong>{advice.title}</strong>
+                            <p>{advice.details}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+              )}
 
 
               {adviceError && (
