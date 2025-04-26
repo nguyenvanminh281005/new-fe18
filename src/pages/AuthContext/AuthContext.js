@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       // Đường dẫn API không khớp với Register.js
       // Từ: 'http://127.0.0.1:5000/api/register'
       // Thành: 'http://127.0.0.1:5000/auth/register'
-      const response = await axios.post('http://127.0.0.1:5000/auth/register', {
+      const response = axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
         username: name, // Thay đổi từ 'name' thành 'username' để khớp với Register.js
         email,
         password
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     setError('');
     setLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:5000/auth/login', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         email: email,
         password
       });

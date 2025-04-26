@@ -12,6 +12,7 @@ import HistoryPanel from './components/HistoryPanel';
 import ResultDisplay from './components/ResultDisplay';
 import AdviceSection from './components/AdviceSection';
 import EmailSharingFeature from '../EmailSharing/EmailSharingFeature';
+import api from '../../components/api'
 
 function Dashboard() {
   const num = 8;
@@ -26,6 +27,7 @@ function Dashboard() {
   const [adviceList, setAdviceList] = useState([]);
   const [adviceError, setAdviceError] = useState('');
   const [loading, setLoading] = useState(false);
+  const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,11 +91,11 @@ function Dashboard() {
     setError('');
     
     try {
-      const response = await axios.post('http://127.0.0.1:5000/predict', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/predict`, {
         features: features.map(Number),
-        userId: currentUser.id // Send user ID for server-side logging if needed
+        userId: currentUser.id
       });
-      
+  
       const prediction = response.data.prediction;
       setResult(prediction);
       
@@ -206,7 +208,7 @@ function Dashboard() {
       setAdviceError('');
       setLoading(true);
       
-      const response = await axios.post('http://127.0.0.1:5000/auth/get_advice', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/get_advice`, {
         features: features.map(Number),
         prediction: result === 'Parkinson Detected' ? 1 : 0,
         userId: currentUser.id
