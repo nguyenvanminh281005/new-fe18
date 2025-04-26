@@ -23,9 +23,6 @@ function Dashboard() {
   const [showHistory, setShowHistory] = useState(false);
   const [error, setError] = useState('');
   const { currentUser, logout } = useAuth();
-  const [adviceList, setAdviceList] = useState([]);
-  const [adviceError, setAdviceError] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -200,46 +197,6 @@ function Dashboard() {
     };
   };
   
-  const handleGetAdvice = async () => {
-    try {
-      setAdviceList([]);
-      setAdviceError('');
-      setLoading(true);
-      
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/get_advice`, {
-        features: features.map(Number),
-        prediction: result === 'Parkinson Detected' ? 1 : 0,
-        userId: currentUser.id
-      });
-      
-      // Kiểm tra nếu response.data.advice là chuỗi JSON
-      if (typeof response.data.advice === 'string') {
-        try {
-          // Cố gắng parse chuỗi JSON
-          const parsedAdvice = JSON.parse(response.data.advice);
-          if (Array.isArray(parsedAdvice)) {
-            setAdviceList(parsedAdvice);
-          } else {
-            setAdviceError('Định dạng lời khuyên không hợp lệ');
-          }
-        } catch (parseError) {
-          console.error('Lỗi khi parse JSON:', parseError);
-          setAdviceError('Không thể xử lý dữ liệu lời khuyên');
-        }
-      } else if (Array.isArray(response.data.advice)) {
-        // Nếu đã là mảng object
-        setAdviceList(response.data.advice);
-      } else {
-        setAdviceError('Định dạng lời khuyên không hợp lệ');
-      }
-    } catch (error) {
-      console.error('Lỗi khi lấy lời khuyên:', error);
-      setAdviceError('Không thể lấy lời khuyên. Vui lòng thử lại sau.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <>
       <Navigation />
