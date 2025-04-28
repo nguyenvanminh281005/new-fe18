@@ -1,6 +1,6 @@
 # Parkinson Detect – Frontend
 
-🍴 **Parkinson Detect** is a disease web application, built with **React**, **Node.js**, offering a clean UI and seamless user experience.
+**Parkinson Detect** is a disease web application, built with **React**, **Node.js**, offering a clean UI and seamless user experience.
 
 ---
 
