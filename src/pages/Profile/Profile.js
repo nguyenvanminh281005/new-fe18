@@ -1,55 +1,140 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Profile.module.css';
 
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 function Profile() {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, token, logout } = useAuth();
   const navigate = useNavigate();
+
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(currentUser?.name || '');
-  const [email, setEmail] = useState(currentUser?.email || '');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  // Hàm gọi API lấy profile
+  const fetchUserProfile = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_BASE_URL}/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) {
+        throw new Error('Không lấy được thông tin người dùng');
+      }
+      const data = await res.json();
+      setName(data.username || '');
+      setEmail(data.email || '');
+      setCreatedAt(data.created_at || data.createdAt || '');
+      setErrorMessage('');
+    } catch (err) {
+      setErrorMessage(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Lấy profile khi component mount hoặc token thay đổi
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchUserProfile();
+  }, [token, navigate]);
+
+  // Hàm cập nhật profile
+  const updateUserProfile = async (updatedData) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/update-profile`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(updatedData)
+      });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || 'Cập nhật thất bại');
+      }
+      return await res.json();
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  // Hàm xóa tài khoản
+  const deleteUserAccount = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/delete-account`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || 'Xóa tài khoản thất bại');
+      }
+      return await res.json();
+    } catch (err) {
+      throw err;
+    }
+  };
 
   const handleGoBack = () => navigate('/dashboard');
-  const handleLogout = () => { logout(); navigate('/home'); };
-  
+
+  const handleLogout = () => {
+    logout();
+    navigate('/home');
+  };
+
   const handleEditToggle = () => {
     if (isEditing) saveChanges();
     else setIsEditing(true);
   };
 
-  const saveChanges = () => {
+  const saveChanges = async () => {
     if (!name.trim()) {
       setErrorMessage('Name cannot be empty');
       return;
     }
-    
-    const updatedUser = { ...currentUser, name, email };
-    localStorage.setItem('parkinsonsAppUser', JSON.stringify(updatedUser));
-    
-    setSuccessMessage('Profile updated successfully');
-    setErrorMessage('');
-    setIsEditing(false);
-    setTimeout(() => setSuccessMessage(''), 3000);
+    try {
+      await updateUserProfile({ username: name, email });
+      setSuccessMessage('Profile updated successfully');
+      setErrorMessage('');
+      setIsEditing(false);
+      // Cập nhật lại profile mới từ server để đồng bộ
+      fetchUserProfile();
+      setTimeout(() => setSuccessMessage(''), 3000);
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
   };
 
   const handleDeleteAccount = () => {
     if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-      localStorage.removeItem('parkinsonsAppUser');
-      localStorage.removeItem(`predictionHistory_${currentUser.id}`);
-      logout();
-      navigate('/home');
+      deleteUserAccount()
+        .then(() => {
+          logout();
+          navigate('/home');
+        })
+        .catch(err => setErrorMessage(err.message));
     }
   };
 
   const cancelEdit = () => {
-    setName(currentUser?.name || '');
-    setEmail(currentUser?.email || '');
+    fetchUserProfile();
     setIsEditing(false);
     setErrorMessage('');
   };
+
+  if (loading) {
+    return <div className={styles.loading}>Loading...</div>;
+  }
 
   return (
     <div className={styles.profileContainer}>
@@ -67,24 +152,36 @@ function Profile() {
           <div className={styles.formGroup}>
             <label>Name</label>
             {isEditing ? (
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} className={styles.input} />
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={styles.input}
+              />
             ) : (
-              <div className={styles.profileInfo}>{currentUser?.name}</div>
+              <div className={styles.profileInfo}>{name}</div>
             )}
           </div>
 
           <div className={styles.formGroup}>
             <label>Email</label>
             {isEditing ? (
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={styles.input} />
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={styles.input}
+              />
             ) : (
-              <div className={styles.profileInfo}>{currentUser?.email}</div>
+              <div className={styles.profileInfo}>{email}</div>
             )}
           </div>
 
           <div className={styles.formGroup}>
             <label>Member Since</label>
-            <div className={styles.profileInfo}>{new Date(currentUser?.createdAt).toLocaleDateString()}</div>
+            <div className={styles.profileInfo}>
+              {createdAt ? new Date(createdAt).toLocaleDateString() : ''}
+            </div>
           </div>
         </div>
 
