@@ -88,26 +88,14 @@
   cursor: not-allowed;
 }
 
-.authFooter {
+.footer {
   text-align: center;
   margin-top: 25px;
   padding-top: 20px;
-  border-top: 1px solid #eee;
-}
-
-.authFooter p {
   color: #666;
-  font-size: 15px;
-}
-
-.authFooter a {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.authFooter a:hover {
-  text-decoration: underline;
+  font-size: 14px;
+  width: 80%;
+  max-width: 1200px;
 }
 
 .errorMessage {
@@ -154,11 +142,6 @@
   margin: 0 auto;
 }
 
-/* .heroSection:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-} */
-
 .heroSection h1 {
   font-size: 32px;
   margin-bottom: 10px;
@@ -202,7 +185,7 @@
   padding: 20px;
 }
 
-.btnPrimary, .btnSecondary {
+.btnPrimary, .btnSecondary{
   padding: 12px 20px;
   border-radius: 6px;
   font-size: 16px;
@@ -229,7 +212,7 @@
   border: #0069d9;
 }
 
-.btnSecondary:hover {
+.btnSecondary:hover{
   background-color: #f0f2f5;
 }
 
@@ -333,20 +316,76 @@
   }
 }
 
-.logoutButton {
-  background-color: #007bff;
-  color: white;
-  border: #007bff;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  margin: 10px;
+.introSection,
+.featuresSection,
+.quickStartSection,
+.testimonialsSection {
+  background-color: #ffffff;
+  padding: 30px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
 }
 
-.logoutButton:hover {
-  background-color: #008cff; /* Đỏ đậm hơn khi hover */
-  text-decoration: none;
+.introSection h2,
+.featuresSection h2,
+.quickStartSection h2,
+.testimonialsSection h2 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.introSection p,
+.featuresSection ul,
+.quickStartSection ol,
+.testimonialsSection blockquote {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.featuresSection ul,
+.quickStartSection ol {
+  padding-left: 20px;
+}
+
+.featuresSection li,
+.quickStartSection li {
+  margin-bottom: 10px;
+}
+
+.testimonialsSection blockquote {
+  font-style: italic;
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-left: 5px solid #007bff;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+@media (max-width: 480px) {
+  .introSection,
+  .featuresSection,
+  .quickStartSection,
+  .testimonialsSection {
+    padding: 20px;
+  }
+
+  .introSection h2,
+  .featuresSection h2,
+  .quickStartSection h2,
+  .testimonialsSection h2 {
+    font-size: 22px;
+  }
+
+  .introSection p,
+  .featuresSection li,
+  .quickStartSection li,
+  .testimonialsSection blockquote {
+    font-size: 14px;
+  }
 }

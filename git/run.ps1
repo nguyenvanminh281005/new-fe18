@@ -1,1 +1,3 @@
-serve -s build
+# serve -s build
+
+npm start

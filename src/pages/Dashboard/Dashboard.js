@@ -1,6 +1,5 @@
 // Dashboard.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Dashboard.module.css';
@@ -23,7 +22,6 @@ function Dashboard() {
   const [showHistory, setShowHistory] = useState(false);
   const [error, setError] = useState('');
   const { currentUser, logout } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Load feature names from CSV
@@ -126,15 +124,6 @@ function Dashboard() {
     localStorage.removeItem(key);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/home');
-  };
-
-  const navigateToProfile = () => {
-    navigate('/profile');
-  };
-
   const exportToCSV = () => {
     if (predictionHistory.length === 0) {
       alert('No data to export!');
@@ -205,10 +194,6 @@ function Dashboard() {
           <h1>Parkinson's Disease Prediction</h1>
           <div className={styles.userSection}>
             <span>Welcome, {currentUser.email}</span>
-            <div className={styles.userMenu}>
-              <button className={styles.profileButton} onClick={navigateToProfile}>Profile</button>
-              <button className={styles.logoutButton} onClick={handleLogout}>Log Out</button>
-            </div>
           </div>
           <div className={styles.tabs}>
             <button 
@@ -243,7 +228,6 @@ function Dashboard() {
             <>
               <ResultDisplay result={result} />
               
-              {/* Component lời khuyên mới */}
               <AdviceSection
                 features={features}
                 result={result}

@@ -4,6 +4,7 @@ import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Home.module.css'; // Import CSS module
 import Login from '../Login/Login';  // Import Login component
 import Register from '../Register/Register';  // Import Register component
+import HomeContent from './components/HomeContent';
 import { useNavigate } from 'react-router-dom';
 
 // Component About đơn giản hóa cho trang Home
@@ -23,45 +24,6 @@ const SimpleAbout = () => {
 
   return (
     <div className={styles.simpleAbout}>
-      <section className={styles.heroSection}>
-        <div className={styles.container}>
-          <h1>Hiểu Về Bệnh Parkinson</h1>
-          <p className={styles.lead}>Công cụ hỗ trợ phát hiện và theo dõi sớm các dấu hiệu bệnh Parkinson</p>
-        </div>
-      </section>
-
-      <section className={styles.contentSection}>
-        <div className={styles.container}>
-          <div className={styles.card}>
-            <h2>Bệnh Parkinson là gì?</h2>
-            <p>Bệnh Parkinson là một rối loạn thần kinh thoái hóa tiến triển, ảnh hưởng đến hệ thống vận động của cơ thể. Bệnh phát triển do sự suy giảm tế bào thần kinh trong một vùng não gọi là chất đen (substantia nigra), dẫn đến giảm sản xuất dopamine - một chất dẫn truyền thần kinh quan trọng.</p>
-            
-            <div className={styles.infoBox}>
-              <p><strong>Số liệu thống kê:</strong> Bệnh Parkinson ảnh hưởng đến hơn 10 triệu người trên toàn cầu. Tại Việt Nam, ước tính có khoảng 100.000 người mắc bệnh này.</p>
-            </div>
-          </div>
-
-          <div className={styles.card}>
-            <h2>Dấu hiệu chính</h2>
-            <div className={styles.symptomsGrid}>
-              <div className={styles.symptomItem}>
-                <h3>Run rẩy (Tremor)</h3>
-                <p>Thường bắt đầu ở một tay hoặc ngón tay và xảy ra khi nghỉ ngơi.</p>
-              </div>
-              
-              <div className={styles.symptomItem}>
-                <h3>Cứng cơ (Rigidity)</h3>
-                <p>Cứng cơ ở tay, chân và thân người, gây khó khăn khi cử động.</p>
-              </div>
-              
-              <div className={styles.symptomItem}>
-                <h3>Chậm vận động</h3>
-                <p>Giảm tốc độ cử động và khó bắt đầu các động tác.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <div className={styles.ctaSection}>
         <Link to="/about" className={styles.btnPrimary}>Tìm hiểu thêm</Link>
@@ -74,8 +36,6 @@ const SimpleAbout = () => {
     </div>
   );
 };
-
-
 
 function Home() {
   const { currentUser, logout } = useAuth();
@@ -97,22 +57,23 @@ function Home() {
       {/* Header với nút đăng nhập/đăng ký */}
       <header className={styles.homeHeader}>
         <h1>Parkinson's Disease Prediction</h1>
-        <div className={styles.authButtons}>
-          {!currentUser ? (
-            <>
-              <button onClick={() => openPopup('login')} className={styles.btnPrimary}>Đăng nhập</button>
-              <button onClick={() => openPopup('register')} className={styles.btnSecondary}>Đăng ký</button>
-            </>
-          ) : (
-            <div className={styles.profileContainer}>
-              <button className={styles.logoutButton} onClick={handleLogout}>Log Out</button>
-            </div>
-          )}
-        </div>
+          <div className={styles.authButtons}>
+            {!currentUser ? (
+              <>
+                <button onClick={() => openPopup('login')} className={styles.btnPrimary}>Đăng nhập</button>
+                <button onClick={() => openPopup('register')} className={styles.btnSecondary}>Đăng ký</button>
+              </>
+            ) : (
+              <div className={styles.authButtons}>
+                <button onClick={() => navigate('/profile')} className={styles.btnPrimary}> Profile </button>
+                <button className={styles.btnSecondary} onClick={handleLogout}>Log Out</button>
+              </div>
+            )}
+          </div>
       </header>
 
-      {/* Nội dung chính - phiên bản đơn giản của About */}
       <main className={styles.homeContent}>
+        <HomeContent />
         <SimpleAbout />
       </main>
 
@@ -120,7 +81,6 @@ function Home() {
         <p>&copy; Nguyen Van Minh</p>
       </footer>
 
-        {/* Hiển thị popup Login hoặc Register */}
         {showPopup && (
         <div className={styles.modalBackdrop}>
             <div className={styles.modalContent}>

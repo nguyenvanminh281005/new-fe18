@@ -5,7 +5,7 @@ import styles from '../../css/Profile.module.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 function Profile() {
-  const { currentUser, token, logout } = useAuth();
+  const { currentUser, token, logout, isAuthLoading } = useAuth();
   const navigate = useNavigate();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -16,16 +16,25 @@ function Profile() {
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
 
-  // Hàm gọi API lấy profile
+  useEffect(() => {
+    if (isAuthLoading) return;
+
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    fetchUserProfile();
+  }, [token, isAuthLoading, navigate]);
+
   const fetchUserProfile = async () => {
     try {
       setLoading(true);
       const res = await fetch(`${API_BASE_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (!res.ok) {
-        throw new Error('Không lấy được thông tin người dùng');
-      }
+      if (!res.ok) throw new Error('Không lấy được thông tin người dùng');
+
       const data = await res.json();
       setName(data.username || '');
       setEmail(data.email || '');
@@ -37,15 +46,6 @@ function Profile() {
       setLoading(false);
     }
   };
-
-  // Lấy profile khi component mount hoặc token thay đổi
-  useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    fetchUserProfile();
-  }, [token, navigate]);
 
   // Hàm cập nhật profile
   const updateUserProfile = async (updatedData) => {
@@ -132,7 +132,7 @@ function Profile() {
     setErrorMessage('');
   };
 
-  if (loading) {
+  if (isAuthLoading || loading) {
     return <div className={styles.loading}>Loading...</div>;
   }
 
