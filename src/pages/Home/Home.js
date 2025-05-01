@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext/AuthContext';
-import styles from '../../css/Home.module.css'; // Import CSS module
-import Login from '../Login/Login';  // Import Login component
-import Register from '../Register/Register';  // Import Register component
+import styles from '../../css/Home.module.css';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
 import HomeContent from './components/HomeContent';
+import ForgotPassword from '../ForgotPassword/ForgotPassword'
 import { useNavigate } from 'react-router-dom';
+import Footer from './components/Footer';
 
-// Component About đơn giản hóa cho trang Home
 const SimpleAbout = () => {
   const { currentUser } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
-  const [authType, setAuthType] = useState('login'); // 'login' hoặc 'register'
+  const [authType, setAuthType] = useState('login');
 
   const openPopup = (type) => {
     setAuthType(type);
@@ -41,7 +42,7 @@ function Home() {
   const { currentUser, logout } = useAuth();
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();  
-  const [authType, setAuthType] = useState('login'); // 'login' hoặc 'register'
+  const [authType, setAuthType] = useState('login'); // 'login' | 'register' | 'forgot'
   const handleLogout = () => { logout(); navigate('/home'); };
   const openPopup = (type) => {
     setAuthType(type);
@@ -78,22 +79,29 @@ function Home() {
       </main>
 
       <footer className={styles.homeFooter}>
-        <p>&copy; Nguyen Van Minh</p>
+        <Footer/>
       </footer>
 
-        {showPopup && (
-        <div className={styles.modalBackdrop}>
-            <div className={styles.modalContent}>
-            <button className={styles.modalCloseBtn} onClick={closePopup}>
-                &times;
-            </button>
-            {authType === 'login' ? (
-                <Login onClose={closePopup} />
-            ) : (
-                <Register onClose={closePopup} />
-            )}
+      {showPopup && (
+      <div className={styles.modalBackdrop}>
+        <div className={styles.modalContent}>
+          <button className={styles.modalCloseBtn} onClick={closePopup}>&times;</button>
+          {authType === 'login' && (
+            <Login onClose={closePopup} 
+            onOpenRegister={() => setAuthType('register')} 
+            onOpenForgot={() => setAuthType('forgot')} />
+          )}
+          {authType === 'register' && (
+            <Register onClose={closePopup} 
+            onOpenLogin={() => setAuthType('login')} />
+          )}
+          {authType === 'forgot' && (
+            <ForgotPassword onClose={closePopup} 
+              onOpenLogin={() => setAuthType('login')} 
+            />
+          )}
             </div>
-        </div>
+          </div>
         )}
     </div>
   );

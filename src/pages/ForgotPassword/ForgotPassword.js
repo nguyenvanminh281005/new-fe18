@@ -1,75 +1,81 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import styles from '../../css/ForgotPassword.module.css';
+import styles from '../../css/Auth.module.css';
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ onClose, onOpenLogin }) => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!email) {
-      setError('Vui lòng nhập email của bạn');
+      setErrorMsg('Vui lòng nhập email của bạn');
       return;
     }
-    
+
     try {
-      setLoading(true);
-      setError('');
-      
-      // Đây là nơi bạn sẽ gọi API đặt lại mật khẩu của bạn
-      // Ví dụ: await api.sendPasswordResetEmail(email);
-      
-      // Giả lập một API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      setIsLoading(true);
+      setErrorMsg('');
+      setMessage('');
+
+      // Giả lập API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       setMessage('Email đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư của bạn.');
       setEmail('');
     } catch (error) {
-      console.error(error);
-      setError('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+      setErrorMsg('Đã xảy ra lỗi. Vui lòng thử lại sau.');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className={styles.forgotPasswordContainer}>
-      <div className={styles.forgotPasswordCard}>
-        <h2 className={styles.title}>Quên mật khẩu</h2>
-        <p className={styles.instruction}>Nhập email của bạn để nhận link đặt lại mật khẩu</p>
-        
+    <div className={styles.authContainer}>
+      <div className={styles.authCard}>
+        <div className={styles.authHeader}>
+          <h2>Quên mật khẩu</h2>
+          <p>Nhập email của bạn để nhận link đặt lại mật khẩu</p>
+        </div>
+
         {message && <div className={styles.successMessage}>{message}</div>}
-        {error && <div className={styles.errorMessage}>{error}</div>}
-        
-        <form onSubmit={handleSubmit}>
+        {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
+
+        <form onSubmit={handleSubmit} className={styles.authForm}>
           <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.formLabel}>Email</label>
+            <label htmlFor="email">Email</label>
             <input
-              type="email"
               id="email"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Nhập email của bạn"
-              className={styles.formInput}
               required
+              className={styles.input}
             />
           </div>
-          
-          <button 
-            type="submit" 
-            className={styles.submitButton} 
-            disabled={loading}
+
+          <button
+            type="submit"
+            className={styles.authButton}
+            disabled={isLoading}
           >
-            {loading ? 'Đang xử lý...' : 'Gửi yêu cầu đặt lại mật khẩu'}
+            {isLoading ? 'Đang xử lý...' : 'Gửi yêu cầu đặt lại mật khẩu'}
           </button>
         </form>
-        
-        <div className={styles.links}>
-          <Link to="/login" className={styles.backLink}>Quay lại đăng nhập</Link>
+
+        <div className={styles.authFooter}>
+          <p>
+            <span
+              onClick={() => onOpenLogin()}
+              className={styles.linkLike}
+              style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
+            >
+              Quay lại đăng nhập
+            </span>
+          </p>
         </div>
       </div>
     </div>

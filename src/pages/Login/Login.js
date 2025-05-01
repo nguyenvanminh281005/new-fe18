@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Auth.module.css';
 
-function Login({ onClose }) { // Nhận onClose prop để đóng popup
+function Login({ onClose, onOpenRegister, onOpenForgot }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -17,28 +17,25 @@ function Login({ onClose }) { // Nhận onClose prop để đóng popup
     setIsLoading(true);
 
     if (!email || !password) {
-        setErrorMsg('Please fill in all fields.');
-        setIsLoading(false);
-        return;
+      setErrorMsg('Please fill in all fields.');
+      setIsLoading(false);
+      return;
     }
 
     try {
-        console.log("🔍 Gửi request đăng nhập...");
-        console.log("🔍 Dữ liệu gửi đi:", { email, password });
-        // Thay đổi: Sử dụng hàm login từ AuthContext
-        const userData = await login(email, password);
-        console.log("📌 Đăng nhập thành công:", userData);
-        
-        // Đóng popup sau khi đăng nhập thành công
-        if (onClose) onClose();
+      console.log("🔍 Gửi request đăng nhập...");
+      console.log("🔍 Dữ liệu gửi đi:", { email, password });
 
-        // Chuyển hướng đến dashboard sau khi đăng nhập thành công
-        navigate('/home');
+      const userData = await login(email, password);
+      console.log("📌 Đăng nhập thành công:", userData);
+
+      if (onClose) onClose();
+      navigate('/home');
     } catch (err) {
-        console.error("❌ Lỗi đăng nhập:", err);
-        setErrorMsg(err.message || error || 'Login failed. Please try again.');
+      console.error("❌ Lỗi đăng nhập:", err);
+      setErrorMsg(err.message || error || 'Login failed. Please try again.');
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -80,7 +77,14 @@ function Login({ onClose }) { // Nhận onClose prop để đóng popup
           </div>
 
           <div className={styles.forgotPassword}>
-            <Link to="/forgot-password">Forgot Password?</Link>
+            <span
+              onClick={() => {
+                if(onOpenForgot) onOpenForgot();
+              }}
+              style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
+            >
+              Forgot Password?
+            </span>
           </div>
 
           <button 
@@ -93,7 +97,16 @@ function Login({ onClose }) { // Nhận onClose prop để đóng popup
         </form>
 
         <div className={styles.authFooter}>
-          <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+          <p>
+            Don't have an account?{' '}
+            <span
+              onClick={onOpenRegister}
+              className={styles.linkLike}
+              style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
+            >
+              Sign Up
+            </span>
+          </p>
         </div>
       </div>
     </div>

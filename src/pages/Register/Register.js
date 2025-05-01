@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Auth.module.css';
 
-function Register({ onClose }) {
+function Register({ onClose, onOpenLogin }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,7 +54,7 @@ function Register({ onClose }) {
 
       // Chuyển hướng đến trang dashboard
       navigate('/home');
-      
+
     } catch (err) {
       console.error('Lỗi:', err);
       setErrorMsg(err.message || error);
@@ -136,7 +136,16 @@ function Register({ onClose }) {
         </form>
 
         <div className={styles.authFooter}>
-          <p>Already have an account? <Link to="/login">Log In</Link></p>
+          <p>           
+            Already have an account?
+            <span
+              onClick={onOpenLogin}
+              className={styles.linkLike}
+              style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
+            >
+              Sign In
+            </span>
+          </p>
         </div>
       </div>
     </div>
