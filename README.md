@@ -18,6 +18,7 @@
 
 - **Frontend**: React, Node.js
 - **State Management**: Zustand
+- **Database**: Postgres
 - **Icons**: Lucide React
 - **Routing**: React Router v6
 - **Authentication**: JWT-based (handled via backend)
