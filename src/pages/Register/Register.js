@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Auth.module.css';
 
-function Register() {
+function Register({ onClose }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -50,8 +50,11 @@ function Register() {
       const userData = await register(name, email, password);
       console.log('Đăng ký thành công:', userData);
   
+      if (onClose) onClose();
+
       // Chuyển hướng đến trang dashboard
       navigate('/home');
+      
     } catch (err) {
       console.error('Lỗi:', err);
       setErrorMsg(err.message || error);
