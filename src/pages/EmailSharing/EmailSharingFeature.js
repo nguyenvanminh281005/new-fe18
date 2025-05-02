@@ -17,23 +17,17 @@ const EmailSharingFeature = ({ predictionData }) => {
     setIsSuccess(false);
 
     try {
-      // Chuẩn bị dữ liệu features theo đúng format mà backend cần
-      const features = {};
-      if (predictionData.features && predictionData.featureNames) {
-        predictionData.features.forEach((val, idx) => {
-          features[predictionData.featureNames[idx] || `F${idx + 1}`] = val;
-        });
-      }
-
-      // Thêm trạng thái vào features
-      features['status'] = predictionData.prediction === 'Positive' ? 
-        'Dương tính với Parkinson' : 'Âm tính với Parkinson';
+      // Chuẩn bị dữ liệu gửi đi đúng format backend mong muốn
+      const predictionResults = {
+        features: predictionData.features || [],
+        status: predictionData.prediction === 'Parkinson Detected' ? 'Parkinson Detected' : 'Healthy'
+      };
 
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/share-results`, {
         recipientEmail: email,
         doctorName: doctorName,
         message: message,
-        predictionResults: features  // Gửi trực tiếp features kèm status
+        predictionResults: predictionResults
       });
 
       if (response.data.status === 'success') {
@@ -70,7 +64,7 @@ const EmailSharingFeature = ({ predictionData }) => {
             required
           />
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="email" className={styles.label}>Email bác sĩ:</label>
           <input
@@ -83,7 +77,7 @@ const EmailSharingFeature = ({ predictionData }) => {
             required
           />
         </div>
-        
+
         <div className={styles.formGroup}>
           <label htmlFor="message" className={styles.label}>Lời nhắn (không bắt buộc):</label>
           <textarea
@@ -95,16 +89,16 @@ const EmailSharingFeature = ({ predictionData }) => {
             rows="4"
           />
         </div>
-        
-        <button 
-          type="submit" 
+
+        <button
+          type="submit"
           className={`${styles.button} ${isSending ? styles.buttonDisabled : ''}`}
           disabled={isSending || !predictionData.prediction}
         >
           {isSending ? 'Đang gửi...' : 'Gửi kết quả'}
         </button>
       </form>
-      
+
       {statusMessage && (
         <div className={`${styles.statusMessage} ${isSuccess ? styles.success : styles.error}`}>
           {statusMessage}
