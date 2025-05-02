@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from '../AuthContext/AuthContext';
 import Dashboard from '../Dashboard/Dashboard';
-import Profile from '../Profile/Profile';
 import About from '../About/About';
 import Home from '../Home/Home';
 import ProtectedRoute from '../../components/ProtectedRoute';
@@ -19,14 +18,6 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/profile" 
-            element={
-              <ProtectedRoute>
-                <Profile />
               </ProtectedRoute>
             } 
           />

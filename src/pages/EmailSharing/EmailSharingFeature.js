@@ -29,7 +29,7 @@ const EmailSharingFeature = ({ predictionData }) => {
       features['status'] = predictionData.prediction === 'Positive' ? 
         'Dương tính với Parkinson' : 'Âm tính với Parkinson';
 
-      const response = await axios.post('http://127.0.0.1:5000/auth/share-results', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/share-results`, {
         recipientEmail: email,
         doctorName: doctorName,
         message: message,

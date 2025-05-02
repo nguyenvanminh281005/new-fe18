@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext/AuthContext';
 import styles from '../../../css/Home.module.css';
 
-const Header = ({ onOpenPopup }) => {
+const Header = ({ openPopup }) => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -18,14 +18,15 @@ const Header = ({ onOpenPopup }) => {
       <div className={styles.authButtons}>
         {!currentUser ? (
           <>
-            <button onClick={() => onOpenPopup('login')} className={styles.btnPrimary}>Đăng nhập</button>
-            <button onClick={() => onOpenPopup('register')} className={styles.btnSecondary}>Đăng ký</button>
+            <button onClick={() => openPopup('login')} className={styles.btnPrimary}>Đăng nhập</button>
+            <button onClick={() => openPopup('register')} className={styles.btnSecondary}>Đăng ký</button>
           </>
         ) : (
-          <>
-            <button onClick={() => navigate('/profile')} className={styles.btnPrimary}>Profile</button>
+          <div className={styles.authButtons}>
+            {/* Khi bấm Profile, gọi openPopup với 'profile' */}
+            <button onClick={() => openPopup('profile')} className={styles.btnPrimary}>Profile</button>
             <button className={styles.btnSecondary} onClick={handleLogout}>Log Out</button>
-          </>
+          </div>
         )}
       </div>
     </header>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../../css/Auth.module.css';
+import axios from 'axios';
 
 const ForgotPassword = ({ onClose, onOpenLogin }) => {
   const [email, setEmail] = useState('');
@@ -9,24 +10,29 @@ const ForgotPassword = ({ onClose, onOpenLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!email) {
       setErrorMsg('Vui lòng nhập email của bạn');
       return;
     }
-
+  
     try {
       setIsLoading(true);
       setErrorMsg('');
       setMessage('');
-
-      // Giả lập API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      setMessage('Email đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư của bạn.');
+  
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/forgot-password`, { email });
+  
+      setMessage(response.data.message || 'Email đặt lại mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư của bạn.');
       setEmail('');
     } catch (error) {
-      setErrorMsg('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+      if (error.response) {
+        setErrorMsg(error.response.data.error || 'Đã xảy ra lỗi từ server.');
+      } else if (error.request) {
+        setErrorMsg('Không nhận được phản hồi từ server.');
+      } else {
+        setErrorMsg('Lỗi khi gửi yêu cầu.');
+      }
     } finally {
       setIsLoading(false);
     }

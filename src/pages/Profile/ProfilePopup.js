@@ -4,7 +4,8 @@ import { useAuth } from '../AuthContext/AuthContext';
 import styles from '../../css/Profile.module.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
-function Profile() {
+
+const ProfilePopup = ({ onClose }) => {
   const { currentUser, token, logout, isAuthLoading } = useAuth();
   const navigate = useNavigate();
 
@@ -20,7 +21,9 @@ function Profile() {
     if (isAuthLoading) return;
 
     if (!token) {
-      navigate('/login');
+      // Nếu không có token, đóng popup và chuyển về login hoặc home
+      onClose();
+      navigate('/home');
       return;
     }
 
@@ -47,7 +50,6 @@ function Profile() {
     }
   };
 
-  // Hàm cập nhật profile
   const updateUserProfile = async (updatedData) => {
     try {
       const res = await fetch(`${API_BASE_URL}/auth/update-profile`, {
@@ -68,7 +70,6 @@ function Profile() {
     }
   };
 
-  // Hàm xóa tài khoản
   const deleteUserAccount = async () => {
     try {
       const res = await fetch(`${API_BASE_URL}/auth/delete-account`, {
@@ -85,10 +86,9 @@ function Profile() {
     }
   };
 
-  const handleGoBack = () => navigate('/home');
-
   const handleLogout = () => {
     logout();
+    onClose();
     navigate('/home');
   };
 
@@ -107,7 +107,6 @@ function Profile() {
       setSuccessMessage('Profile updated successfully');
       setErrorMessage('');
       setIsEditing(false);
-      // Cập nhật lại profile mới từ server để đồng bộ
       fetchUserProfile();
       setTimeout(() => setSuccessMessage(''), 3000);
     } catch (err) {
@@ -120,6 +119,7 @@ function Profile() {
       deleteUserAccount()
         .then(() => {
           logout();
+          onClose();
           navigate('/home');
         })
         .catch(err => setErrorMessage(err.message));
@@ -133,77 +133,80 @@ function Profile() {
   };
 
   if (isAuthLoading || loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styles.modalBackdrop}>
+        <div className={styles.modalContent}>
+          <div className={styles.loading}>Loading...</div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className={styles.profileContainer}>
-      <header className={styles.header}>
-        <button className={styles.backButton} onClick={handleGoBack}>Back to Home</button>
-        <button className={styles.logoutButton} onClick={handleLogout}>Log Out</button>
-      </header>
+    <div className={styles.modalBackdrop}>
+      <div className={styles.modalContent}>
+        <div className={styles.profileCard}>
+          <h1>Your Profile</h1>
+          {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
+          {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
 
-      <div className={styles.profileCard}>
-        <h1>Your Profile</h1>
-        {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
-        {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+          <div className={styles.profileForm}>
+            <div className={styles.formGroup}>
+              <label>Name</label>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={styles.input}
+                />
+              ) : (
+                <div className={styles.profileInfo}>{name}</div>
+              )}
+            </div>
 
-        <div className={styles.profileForm}>
-          <div className={styles.formGroup}>
-            <label>Name</label>
-            {isEditing ? (
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={styles.input}
-              />
-            ) : (
-              <div className={styles.profileInfo}>{name}</div>
-            )}
-          </div>
+            <div className={styles.formGroup}>
+              <label>Email</label>
+              {isEditing ? (
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={styles.input}
+                />
+              ) : (
+                <div className={styles.profileInfo}>{email}</div>
+              )}
+            </div>
 
-          <div className={styles.formGroup}>
-            <label>Email</label>
-            {isEditing ? (
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.input}
-              />
-            ) : (
-              <div className={styles.profileInfo}>{email}</div>
-            )}
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Member Since</label>
-            <div className={styles.profileInfo}>
-              {createdAt ? new Date(createdAt).toLocaleDateString() : ''}
+            <div className={styles.formGroup}>
+              <label>Member Since</label>
+              <div className={styles.profileInfo}>
+                {createdAt ? new Date(createdAt).toLocaleDateString() : ''}
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.profileActions}>
-          {isEditing ? (
-            <>
-              <button className={styles.cancelButton} onClick={cancelEdit}>Cancel</button>
-              <button className={styles.saveButton} onClick={handleEditToggle}>Save Changes</button>
-            </>
-          ) : (
-            <button className={styles.editButton} onClick={handleEditToggle}>Edit Profile</button>
-          )}
-        </div>
-
-        <div className={styles.dangerZone}>
-          <h3>Danger Zone</h3>
-          <button className={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
-          <p className={styles.warningText}>This will permanently delete your account and all associated data.</p>
+          <div className={styles.profileActions}>
+            {isEditing ? (
+              <>
+                <button className={styles.cancelButton} onClick={cancelEdit}>Cancel</button>
+                <button className={styles.saveButton} onClick={handleEditToggle}>Save Changes</button>
+              </>
+            ) : (
+              <button className={styles.editButton} onClick={handleEditToggle}>Edit Profile</button>
+            )}
+            <button className={styles.logoutButton} onClick={handleLogout}>Log Out</button>
+          </div>
+          <div className={styles.dangerZone}>
+            <h3>Danger Zone</h3>
+            <button className={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
+            <p className={styles.warningText}>This will permanently delete your account and all associated data.</p>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default Profile;
+export default ProfilePopup;
