@@ -16,26 +16,26 @@ function HistoryPanel({
   return (
     <div className={styles.historyPanel}>
       <div className={styles.historyHeader}>
-        <h2>Your Prediction History</h2>
+        <h2>Lịch sử dự đoán</h2>
         <div className={styles.exportButtons}>
           <button className={styles.exportCsvButton} onClick={exportToCSV}>
-            Export CSV
+            Xuất ra file CSV
           </button>
           <button className={styles.exportPdfButton} onClick={exportToPDF}>
-            Export PDF
+            Xuất ra file PDF
           </button>
         </div>
         {predictionHistory.length > 0 && (
           <button className={styles.clearButton} onClick={clearAllHistory}>
-            Clear All
+            Xóa tất cả
           </button>
         )}
       </div>
 
       {predictionHistory.length === 0 ? (
         <div className={styles.emptyHistory}>
-          <p>No prediction history available yet.</p>
-          <p>Make a prediction to see it here.</p>
+          <p>Không có dữ liệu lịch sử dự đoán.</p>
+          <p>Hãy nhập thông tin dự đoán để có lịch sử.</p>
         </div>
       ) : (
         <div className={styles.historyList}>

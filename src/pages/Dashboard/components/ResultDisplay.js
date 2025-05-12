@@ -7,12 +7,12 @@ function ResultDisplay({ result }) {
 
   return (
     <div className={`${styles.resultBox} ${isPositive ? styles.positive : styles.negative}`}>
-      <h3>Prediction Result:</h3>
+      <h3>Kết quả dự đoán:</h3>
       <p className={styles.resultText}>{result}</p>
       <p className={styles.resultDescription}>
         {isPositive 
-          ? 'The model predicts a likelihood of Parkinson\'s disease. Please consult with a healthcare professional.'
-          : 'The model predicts a lower likelihood of Parkinson\'s disease.'}
+          ? 'Bạn đã được dự đoán mắc bệnh Pakinson, hãy liên hệ tới bác sĩ để được nhận lời khuyên và điều trị.'
+          : 'Chúc mừng, bạn được dự đoán có tỉ lệ mắc bệnh rất thấp.'}
       </p>
     </div>
   );

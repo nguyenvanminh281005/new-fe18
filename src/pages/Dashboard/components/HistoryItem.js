@@ -15,7 +15,7 @@ function HistoryItem({
     >
       <div className={styles.historyInfo}>
         <span className={styles.historyTimestamp}>{item.timestamp}</span>
-        <span className={styles.historyResult}>Result: <strong>{item.prediction}</strong></span>
+        <span className={styles.historyResult}>Kết quả: <strong>{item.prediction}</strong></span>
       </div>
       
       <div className={styles.historyFeatures}>

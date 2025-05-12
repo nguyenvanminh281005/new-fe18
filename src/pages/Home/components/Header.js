@@ -14,7 +14,7 @@ const Header = ({ openPopup }) => {
 
   return (
     <header className={styles.homeHeader}>
-      <h1>Parkinson's Disease Prediction</h1>
+      <h1>Ứng dụng dự đoán xét nghiệm bệnh Pakinson</h1>
       <div className={styles.authButtons}>
         {!currentUser ? (
           <>
@@ -24,8 +24,8 @@ const Header = ({ openPopup }) => {
         ) : (
           <div className={styles.authButtons}>
             {/* Khi bấm Profile, gọi openPopup với 'profile' */}
-            <button onClick={() => openPopup('profile')} className={styles.btnPrimary}>Profile</button>
-            <button className={styles.btnSecondary} onClick={handleLogout}>Log Out</button>
+            <button onClick={() => openPopup('profile')} className={styles.btnPrimary}>Trang cá nhân</button>
+            <button className={styles.btnSecondary} onClick={handleLogout}>Đăng xuất</button>
           </div>
         )}
       </div>

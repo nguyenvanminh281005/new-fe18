@@ -83,7 +83,7 @@ function Dashboard() {
 
   const handleSubmit = async () => {
     if (features.some(f => f === '')) {
-      setError('Please fill in all input fields');
+      setError('Hãy cung cấp đủ thông số cần thiết');
       return;
     }
 
@@ -200,22 +200,22 @@ function Dashboard() {
       <Navigation />
       <div className={styles.dashboardContainer}>
         <header className={styles.header}>
-          <h1>Parkinson's Disease Prediction</h1>
+          <h1>Ứng dụng dự đoán xét nghiệm bệnh Pakinson</h1>
           <div className={styles.userSection}>
-            <span>Welcome, {currentUser.email}</span>
+            <span>Chào mừng trở lại, {currentUser.email}</span>
           </div>
           <div className={styles.tabs}>
             <button 
               className={!showHistory ? styles.activeTab : styles.tab} 
               onClick={() => setShowHistory(false)}
             >
-              Prediction
+              Dự đoán
             </button>
             <button 
               className={showHistory ? styles.activeTab : styles.tab} 
               onClick={() => setShowHistory(true)}
             >
-              History {predictionHistory.length > 0 && `(${predictionHistory.length})`}
+              Lịch sử dự đoán {predictionHistory.length > 0 && `(${predictionHistory.length})`}
             </button>
           </div>
         </header>

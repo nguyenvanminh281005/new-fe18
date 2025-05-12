@@ -65,14 +65,14 @@ function PredictionForm({
           className={styles.resetButton} 
           onClick={resetForm}
         >
-          Reset
+          Xóa hết
         </button>
         <button 
           className={styles.predictButton} 
           onClick={handleSubmit}
           disabled={isLoading}
         >
-          {isLoading ? 'Processing...' : 'Predict'}
+          {isLoading ? 'Đang xử lý...' : 'Dự đoán'}
         </button>
       </div>
     </>
