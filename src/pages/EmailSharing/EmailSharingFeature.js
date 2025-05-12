@@ -20,7 +20,7 @@ const EmailSharingFeature = ({ predictionData }) => {
       // Chuẩn bị dữ liệu gửi đi đúng format backend mong muốn
       const predictionResults = {
         features: predictionData.features || [],
-        status: predictionData.prediction === 'Parkinson Detected' ? 'Parkinson Detected' : 'Healthy'
+        status: predictionData.prediction === 'Disease Detected' ? 'Disease Detected' : 'Healthy'
       };
 
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/share-results`, {

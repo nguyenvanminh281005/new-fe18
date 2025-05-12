@@ -40,7 +40,7 @@ function AdviceSection({ features, result, currentUser }) {
 
   return (
     <div className={styles.adviceSection}>
-      {result === 'Parkinson Detected' && (
+      {result === 'Disease Detected' && (
         <button 
           className={styles.adviceButton}
           onClick={handleGetAdvice}

@@ -67,60 +67,60 @@ function Register({ onClose, onOpenLogin }) {
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
         <div className={styles.authHeader}>
-          <h2>Create Account</h2>
-          <p>Sign up for Parkinson's Prediction Tool</p>
+          <h2>Tạo tài khoản</h2>
+          <p>Đăng ký tài khoản cho website của bạn</p>
         </div>
 
         {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
 
         <form onSubmit={handleSubmit} className={styles.authForm}>
           <div className={styles.formGroup}>
-            <label htmlFor="name">Full Name</label>
+            <label htmlFor="name">Tên đầy đủ của bạn</label>
             <input
               id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
+              placeholder="Tên bạn là"
               required
               className={styles.input}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">Địa chỉ email</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Nhập email của bạn"
               required
               className={styles.input}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Mật khẩu</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Create a password"
+              placeholder="Nhập mật khẩu của bạn"
               required
               className={styles.input}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword">Confirm Password</label>
+            <label htmlFor="confirmPassword">Xác minh mật khẩu</label>
             <input
               id="confirmPassword"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm your password"
+              placeholder="Xác minh mật khẩu"
               required
               className={styles.input}
             />
@@ -131,19 +131,19 @@ function Register({ onClose, onOpenLogin }) {
             className={styles.authButton}
             disabled={isLoading}
           >
-            {isLoading ? 'Creating Account...' : 'Create Account'}
+            {isLoading ? 'Đang đăng ký...' : 'Tạo tài khoản'}
           </button>
         </form>
 
         <div className={styles.authFooter}>
           <p>           
-            Already have an account?
+            Bạn đã có tài khoản?
             <span
               onClick={onOpenLogin}
               className={styles.linkLike}
               style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
             >
-              Sign In
+              Đăng nhập
             </span>
           </p>
         </div>

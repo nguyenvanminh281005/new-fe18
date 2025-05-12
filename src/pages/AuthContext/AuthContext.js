@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('parkinsonsAppUser');
+    const storedUser = localStorage.getItem('diseaseAppUser');
     const storedToken = localStorage.getItem('token');
 
     if (storedUser && storedToken) {
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
         setCurrentUser(JSON.parse(storedUser));
         setToken(storedToken);
       } catch {
-        localStorage.removeItem('parkinsonsAppUser');
+        localStorage.removeItem('diseaseAppUser');
         localStorage.removeItem('token');
       }
     }
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
         token: response.data.token
       };
 
-      localStorage.setItem('parkinsonsAppUser', JSON.stringify(userData));
+      localStorage.setItem('diseaseAppUser', JSON.stringify(userData));
       localStorage.setItem('token', response.data.token);
       setCurrentUser(userData);
       setToken(response.data.token);
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }) => {
         token: response.data.token
       };
 
-      localStorage.setItem('parkinsonsAppUser', JSON.stringify(userData));
+      localStorage.setItem('diseaseAppUser', JSON.stringify(userData));
       localStorage.setItem('token', response.data.token);
       setCurrentUser(userData);
       setToken(response.data.token);
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('parkinsonsAppUser');
+    localStorage.removeItem('diseaseAppUser');
     localStorage.removeItem('token');
     setCurrentUser(null);
     setToken(null);

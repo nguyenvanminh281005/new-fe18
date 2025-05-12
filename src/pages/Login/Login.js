@@ -43,34 +43,34 @@ function Login({ onClose, onOpenRegister, onOpenForgot }) {
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
         <div className={styles.authHeader}>
-          <h2>Welcome Back</h2>
-          <p>Log in to your Parkinson's Prediction account</p>
+          <h2>Chào mừng trở lại</h2>
+          <p>Đăng nhập vào tài khoản của bạn</p>
         </div>
 
         {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
 
         <form onSubmit={handleSubmit} className={styles.authForm}>
           <div className={styles.formGroup}>
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">Địa chỉ Email</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Nhập email của bạn"
               required
               className={styles.input}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">Mật khẩu</label>
             <input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Nhập mật khẩu của bạn"
               required
               className={styles.input}
             />
@@ -83,7 +83,7 @@ function Login({ onClose, onOpenRegister, onOpenForgot }) {
               }}
               style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
             >
-              Forgot Password?
+              Quên mật khẩu?
             </span>
           </div>
 
@@ -98,13 +98,13 @@ function Login({ onClose, onOpenRegister, onOpenForgot }) {
 
         <div className={styles.authFooter}>
           <p>
-            Don't have an account?{' '}
+            Bạn chưa có tài khoản?{' '}
             <span
               onClick={onOpenRegister}
               className={styles.linkLike}
               style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}
             >
-              Sign Up
+              Đăng ký
             </span>
           </p>
         </div>

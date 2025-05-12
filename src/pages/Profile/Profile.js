@@ -99,12 +99,12 @@ function Profile() {
 
   const saveChanges = async () => {
     if (!name.trim()) {
-      setErrorMessage('Name cannot be empty');
+      setErrorMessage('Tên không được để trống');
       return;
     }
     try {
       await updateUserProfile({ username: name, email });
-      setSuccessMessage('Profile updated successfully');
+      setSuccessMessage('Cập nhật thành công');
       setErrorMessage('');
       setIsEditing(false);
       // Cập nhật lại profile mới từ server để đồng bộ
@@ -133,24 +133,24 @@ function Profile() {
   };
 
   if (isAuthLoading || loading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return <div className={styles.loading}>Đang tải...</div>;
   }
 
   return (
     <div className={styles.profileContainer}>
       <header className={styles.header}>
-        <button className={styles.backButton} onClick={handleGoBack}>Back to Home</button>
-        <button className={styles.logoutButton} onClick={handleLogout}>Log Out</button>
+        <button className={styles.backButton} onClick={handleGoBack}>Quay lại trang chủ</button>
+        <button className={styles.logoutButton} onClick={handleLogout}>Đăng xuất</button>
       </header>
 
       <div className={styles.profileCard}>
-        <h1>Your Profile</h1>
+        <h1>Tài khoản của bạn</h1>
         {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
         {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
 
         <div className={styles.profileForm}>
           <div className={styles.formGroup}>
-            <label>Name</label>
+            <label>Tên</label>
             {isEditing ? (
               <input
                 type="text"
@@ -178,7 +178,7 @@ function Profile() {
           </div>
 
           <div className={styles.formGroup}>
-            <label>Member Since</label>
+            <label>Đăng ký lần đầu</label>
             <div className={styles.profileInfo}>
               {createdAt ? new Date(createdAt).toLocaleDateString() : ''}
             </div>
@@ -188,18 +188,18 @@ function Profile() {
         <div className={styles.profileActions}>
           {isEditing ? (
             <>
-              <button className={styles.cancelButton} onClick={cancelEdit}>Cancel</button>
-              <button className={styles.saveButton} onClick={handleEditToggle}>Save Changes</button>
+              <button className={styles.cancelButton} onClick={cancelEdit}>Tạm dừng</button>
+              <button className={styles.saveButton} onClick={handleEditToggle}>Lưu thay đổi</button>
             </>
           ) : (
-            <button className={styles.editButton} onClick={handleEditToggle}>Edit Profile</button>
+            <button className={styles.editButton} onClick={handleEditToggle}>Chỉnh sửa</button>
           )}
         </div>
 
         <div className={styles.dangerZone}>
           <h3>Danger Zone</h3>
-          <button className={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
-          <p className={styles.warningText}>This will permanently delete your account and all associated data.</p>
+          <button className={styles.deleteButton} onClick={handleDeleteAccount}>Xóa tài khoản</button>
+          <p className={styles.warningText}>Hành động này sẽ xóa hết dữ liệu hiện tại.</p>
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@ function Home() {
   return (
     <div className={styles.homeContainer}>
       <header className={styles.homeHeader}>
-        <h1>Ứng dụng dự đoán xét nghiệm bệnh Pakinson</h1>
+        <h1>Ứng dụng dự đoán xét nghiệm bệnh Alzheimer</h1>
         <div className={styles.authButtons}>
           {!currentUser ? (
             <>

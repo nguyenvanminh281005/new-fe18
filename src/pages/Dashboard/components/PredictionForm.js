@@ -1,16 +1,15 @@
-// PredictionForm.js
 import React from 'react';
 import styles from '../../../css/Dashboard.module.css';
 
 const featureDescriptions = [
-  'Tần số cơ bản của giọng nói',
-  'Tần số cao nhất',
-  'Tần số thấp nhất',
-  'Độ dao động tần số (Jitter)',
-  'Độ phức tạp tái tạo pha (RPDE)',
-  'Phân tích dao động DFA',
-  'Độ lan truyền phổ tần số',
-  'Độ phức tạp phi tuyến (D2)',
+  'Khả năng thực hiện các hoạt động sinh hoạt hàng ngày',
+  'Điểm kiểm tra trạng thái nhận thức',
+  'Đánh giá chức năng sống độc lập',
+  'Mức độ mất phương hướng về thời gian và không gian',
+  'Thay đổi tính cách hoặc hành vi',
+  'Thói quen hút thuốc lá (có/không hoặc số năm hút)',
+  'Tiền sử chấn thương đầu (có/không)',
+  'Mức cholesterol toàn phần trong máu (mg/dL)',
 ];
 
 function PredictionForm({ 

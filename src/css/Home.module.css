@@ -88,15 +88,6 @@
   cursor: not-allowed;
 }
 
-.footer {
-  text-align: center;
-  margin-top: 25px;
-  padding-top: 20px;
-  color: #666;
-  font-size: 14px;
-  width: 80%;
-  max-width: 1200px;
-}
 
 .errorMessage {
   background-color: #f8d7da;

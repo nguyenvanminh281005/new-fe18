@@ -30,10 +30,9 @@ function Dashboard() {
     setSelectedModel(model);
   };
 
-
   useEffect(() => {
     // Load feature names from CSV
-    fetch("/dap.csv")
+    fetch("/new_ver.csv")
       .then((response) => response.text())
       .then((text) => {
         const rows = text.trim().split("\n").map(row => row.split(","));
@@ -135,7 +134,7 @@ function Dashboard() {
 
   const exportToCSV = () => {
     if (predictionHistory.length === 0) {
-      alert('No data to export!');
+      alert('Không có dữ liệu để xuất!');
       return;
     }
   
@@ -158,18 +157,18 @@ function Dashboard() {
   
   const exportToPDF = () => {
     if (predictionHistory.length === 0) {
-      alert('No data to export!');
+      alert('Không có dữ liệu để xuất!');
       return;
     }
   
     const doc = new jsPDF();
     doc.setFontSize(14);
-    doc.text('Prediction History', 10, 10);
+    doc.text('Lịch sử dự đoán', 10, 10);
   
     let yOffset = 20;
     predictionHistory.forEach(({ timestamp, features, prediction }, idx) => {
       doc.text(`#${idx + 1} - ${timestamp}`, 10, yOffset);
-      doc.text(`Prediction: ${prediction}`, 10, yOffset + 7);
+      doc.text(`Dự đoán: ${prediction}`, 10, yOffset + 7);
   
       features.forEach((value, featureIdx) => {
         doc.text(`${featureNames[featureIdx] || `F${featureIdx + 1}`}: ${value}`, 10, yOffset + (featureIdx + 2) * 7);
@@ -200,7 +199,7 @@ function Dashboard() {
       <Navigation />
       <div className={styles.dashboardContainer}>
         <header className={styles.header}>
-          <h1>Ứng dụng dự đoán xét nghiệm bệnh Pakinson</h1>
+          <h1>Ứng dụng dự đoán xét nghiệm bệnh Alzheimer</h1>
           <div className={styles.userSection}>
             <span>Chào mừng trở lại, {currentUser.email}</span>
           </div>
@@ -262,13 +261,11 @@ function Dashboard() {
             setShowHistory={setShowHistory}
           />
         )}
-
-        <footer className={styles.footer}>
           <p>&copy; Nguyen Van Minh</p>
-        </footer>
       </div>
     </>
   );
 }
 
 export default Dashboard;
+

@@ -99,12 +99,12 @@ const ProfilePopup = ({ onClose }) => {
 
   const saveChanges = async () => {
     if (!name.trim()) {
-      setErrorMessage('Name cannot be empty');
+      setErrorMessage('Tên không được để trống');
       return;
     }
     try {
       await updateUserProfile({ username: name, email });
-      setSuccessMessage('Profile updated successfully');
+      setSuccessMessage('Cập nhật thành công');
       setErrorMessage('');
       setIsEditing(false);
       fetchUserProfile();
@@ -115,7 +115,7 @@ const ProfilePopup = ({ onClose }) => {
   };
 
   const handleDeleteAccount = () => {
-    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    if (window.confirm('Bạn chắc chắn muốn xóa tài khoản? Hành động này không thể hoàn tác.')) {
       deleteUserAccount()
         .then(() => {
           logout();
@@ -146,13 +146,13 @@ const ProfilePopup = ({ onClose }) => {
     <div className={styles.modalBackdrop}>
       <div className={styles.modalContent}>
         <div className={styles.profileCard}>
-          <h1>Your Profile</h1>
+          <h1>Tài khoản của bạn</h1>
           {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
           {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
 
           <div className={styles.profileForm}>
             <div className={styles.formGroup}>
-              <label>Name</label>
+              <label>Tên</label>
               {isEditing ? (
                 <input
                   type="text"
@@ -180,7 +180,7 @@ const ProfilePopup = ({ onClose }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>Member Since</label>
+              <label>Đăng ký lần đầu</label>
               <div className={styles.profileInfo}>
                 {createdAt ? new Date(createdAt).toLocaleDateString() : ''}
               </div>
@@ -190,18 +190,18 @@ const ProfilePopup = ({ onClose }) => {
           <div className={styles.profileActions}>
             {isEditing ? (
               <>
-                <button className={styles.cancelButton} onClick={cancelEdit}>Cancel</button>
-                <button className={styles.saveButton} onClick={handleEditToggle}>Save Changes</button>
+                <button className={styles.cancelButton} onClick={cancelEdit}>Hoàn tác</button>
+                <button className={styles.saveButton} onClick={handleEditToggle}>Lưu thay đổi</button>
               </>
             ) : (
-              <button className={styles.editButton} onClick={handleEditToggle}>Edit Profile</button>
+              <button className={styles.editButton} onClick={handleEditToggle}>Chỉnh sửa</button>
             )}
-            <button className={styles.logoutButton} onClick={handleLogout}>Log Out</button>
+            <button className={styles.logoutButton} onClick={handleLogout}>Đăng xuất</button>
           </div>
           <div className={styles.dangerZone}>
-            <h3>Danger Zone</h3>
-            <button className={styles.deleteButton} onClick={handleDeleteAccount}>Delete Account</button>
-            <p className={styles.warningText}>This will permanently delete your account and all associated data.</p>
+            <h3>Vùng nguy hiểm</h3>
+            <button className={styles.deleteButton} onClick={handleDeleteAccount}>Xóa tài khoản</button>
+            <p className={styles.warningText}>Hành động này sẽ xóa tài khoản và dữ liệu của bạn vĩnh viễn.</p>
           </div>
         </div>
       </div>
