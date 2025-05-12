@@ -22,6 +22,14 @@ function Dashboard() {
   const [showHistory, setShowHistory] = useState(false);
   const [error, setError] = useState('');
   const { currentUser, logout } = useAuth();
+  // Thêm vào các state:
+  const [selectedModel, setSelectedModel] = useState('xgboost'); // mặc định
+
+  // Hàm xử lý khi người dùng chọn mô hình khác
+  const handleModelChange = (model) => {
+    setSelectedModel(model);
+  };
+
 
   useEffect(() => {
     // Load feature names from CSV
@@ -74,7 +82,6 @@ function Dashboard() {
   };
 
   const handleSubmit = async () => {
-    // Validate inputs
     if (features.some(f => f === '')) {
       setError('Please fill in all input fields');
       return;
@@ -86,20 +93,22 @@ function Dashboard() {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/predict`, {
         features: features.map(Number),
+        model: selectedModel,
         userId: currentUser.id
       });
-  
+
       const prediction = response.data.prediction;
       setResult(prediction);
-      
+
       const historyEntry = {
         id: Date.now(),
         timestamp: new Date().toLocaleString(),
         features: [...features],
         prediction: prediction,
+        model: selectedModel,
         userId: currentUser.id
       };
-      
+
       setPredictionHistory(prev => [historyEntry, ...prev].slice(0, 10));
     } catch (error) {
       console.error('Error:', error);
@@ -222,7 +231,10 @@ function Dashboard() {
               handleSubmit={handleSubmit}
               isLoading={isLoading}
               num={num}
+              selectedModel={selectedModel}
+              onModelChange={handleModelChange}
             />
+
             
             {result && (
             <>
