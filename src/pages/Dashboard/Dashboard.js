@@ -138,9 +138,10 @@ function Dashboard() {
       return;
     }
   
-    const csvData = predictionHistory.map(({ timestamp, features, prediction }) => ({
+    const csvData = predictionHistory.map(({ timestamp, features, prediction, model }) => ({
       Timestamp: timestamp,
       Prediction: prediction,
+      Model:model,
       ...Object.fromEntries(features.map((val, idx) => [featureNames[idx] || `F${idx + 1}`, val])),
     }));
   
@@ -166,7 +167,7 @@ function Dashboard() {
     doc.text('Lịch sử dự đoán', 10, 10);
   
     let yOffset = 20;
-    predictionHistory.forEach(({ timestamp, features, prediction }, idx) => {
+    predictionHistory.forEach(({ timestamp, features, prediction, model}, idx) => {
       doc.text(`#${idx + 1} - ${timestamp}`, 10, yOffset);
       doc.text(`Dự đoán: ${prediction}`, 10, yOffset + 7);
   

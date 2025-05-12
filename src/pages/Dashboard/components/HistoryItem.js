@@ -11,12 +11,18 @@ function HistoryItem({
 }) {
   return (
     <div 
-      className={`${styles.historyItem} ${item.prediction === 'Positive' ? styles.historyPositive : styles.historyNegative}`}
+      className={`${styles.historyItem} ${item.prediction === 'Disease Detected' ? styles.historyPositive : styles.historyNegative}`}
     >
-      <div className={styles.historyInfo}>
-        <span className={styles.historyTimestamp}>{item.timestamp}</span>
-        <span className={styles.historyResult}>Kết quả: <strong>{item.prediction}</strong></span>
-      </div>
+        <div className={styles.historyInfo}>
+          <span className={styles.historyTimestamp}>{item.timestamp}</span>
+          <span className={styles.historyResult}>
+            Kết quả: <strong>{item.prediction}</strong>
+          </span>
+          <span className={styles.historyModel}>
+            Model sử dụng: <strong>{item.model}</strong>
+          </span>
+        </div>
+
       
       <div className={styles.historyFeatures}>
         {item.features.map((value, idx) => (
@@ -32,13 +38,13 @@ function HistoryItem({
           className={styles.loadButton} 
           onClick={() => loadFromHistory(item)}
         >
-          Load
+          Tải lên
         </button>
         <button 
           className={styles.deleteButton} 
           onClick={() => deleteHistoryItem(item.id)}
         >
-          Delete
+          Xóa
         </button>
         <button 
           className={styles.shareButton} 
@@ -47,7 +53,7 @@ function HistoryItem({
             setShowHistory(false);
           }}
         >
-          Share
+          Chia sẻ
         </button>
       </div>
     </div>

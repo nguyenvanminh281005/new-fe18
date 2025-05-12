@@ -34,9 +34,11 @@ function PredictionForm({
           onChange={(e) => onModelChange(e.target.value)}
           className={styles.select}
         >
-          <option value="xgboost">XGBoost</option>
-          <option value="random_forest">Random Forest</option>
-          <option value="svm">SVM</option>
+          <option value="xgboost_lib">XGBoost Lib</option>
+          <option value="random_forest_lib">Random Forest Lib</option>
+          <option value="xgboost_scr">XGBoost Scr</option>
+          <option value="random_forest_scr">Random Forest Scr</option>
+          <option value="best_model">Best Model</option>
           {/* Có thể thêm các mô hình khác nếu cần */}
         </select>
       </div>

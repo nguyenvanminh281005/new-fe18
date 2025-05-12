@@ -53,7 +53,7 @@
   }
   
   .button {
-    background-color: #3498db;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
@@ -66,7 +66,7 @@
   }
   
   .button:hover {
-    background-color: #2980b9;
+    background-color: #007bffb6;
   }
   
   .buttonDisabled {

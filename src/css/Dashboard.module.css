@@ -519,7 +519,7 @@
 .adviceButton {
   margin-top: 1rem;
   padding: 10px 20px;
-  background-color: #28a745;
+  background-color: #0fc73a;
   border: none;
   border-radius: 6px;
   color: white;
@@ -529,7 +529,7 @@
 }
 
 .adviceButton:hover {
-  background-color: #218838;
+  background-color: rgba(8, 206, 54, 0.808)
 }
 
 
@@ -559,7 +559,6 @@
   border-radius: 6px;
   color: #a8071a;
   box-shadow: 0 2px 6px rgba(255, 77, 79, 0.2);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modelSelector {
