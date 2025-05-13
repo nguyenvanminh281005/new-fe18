@@ -110,3 +110,79 @@
       width: 100%;
     }
   }
+
+
+.title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.input,
+.textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.button {
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.buttonDisabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.statusMessage {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.success {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border-left: 4px solid #28a745;
+}
+
+.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-left: 4px solid #dc3545;
+}

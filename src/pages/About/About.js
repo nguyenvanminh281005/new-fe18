@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from '../../css/About.module.css';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
@@ -60,50 +61,69 @@ const About = () => {
               <span>Trang chủ</span>
             </Link>
 
-            <button className={styles.navButton} onClick={handlePredictClick}>
+            <Link to="/dashboard" className={styles.navButton}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
                 <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
               </svg>
-              <span>Dự đoán</span>
-            </button>
+              <span>Dự đoán ngay</span>
+            </Link>
           </div>
         </div>
       </nav>
 
-      <>
-      <AboutMain/>
-      </>
+      {/* Animated appearance of AboutMain */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <AboutMain />
+      </motion.div>
 
-      {showPopup && (
-        <div className={styles.modalBackdrop}>
-          <div className={styles.modalContent}>
-            <button className={styles.modalCloseBtn} onClick={closePopup}>&times;</button>
-            {authType === 'login' && (
-              <Login
-                onClose={closePopup}
-                onOpenRegister={() => setAuthType('register')}
-                onOpenForgot={() => setAuthType('forgot')}
-              />
-            )}
-            {authType === 'register' && (
-              <Register
-                onClose={closePopup}
-                onOpenLogin={() => setAuthType('login')}
-              />
-            )}
-            {authType === 'forgot' && (
-              <ForgotPassword
-                onClose={closePopup}
-                onOpenLogin={() => setAuthType('login')}
-              />
-            )}
-            {authType === 'profile' && (
-              <ProfilePopup onClose={closePopup} />
-            )}
-          </div>
-        </div>
-      )}
+      {/* Animated popup modal */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            className={styles.modalBackdrop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className={styles.modalContent}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button className={styles.modalCloseBtn} onClick={closePopup}>&times;</button>
+              {authType === 'login' && (
+                <Login
+                  onClose={closePopup}
+                  onOpenRegister={() => setAuthType('register')}
+                  onOpenForgot={() => setAuthType('forgot')}
+                />
+              )}
+              {authType === 'register' && (
+                <Register
+                  onClose={closePopup}
+                  onOpenLogin={() => setAuthType('login')}
+                />
+              )}
+              {authType === 'forgot' && (
+                <ForgotPassword
+                  onClose={closePopup}
+                  onOpenLogin={() => setAuthType('login')}
+                />
+              )}
+              {authType === 'profile' && (
+                <ProfilePopup onClose={closePopup} />
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

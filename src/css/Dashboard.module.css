@@ -350,6 +350,12 @@
   border-radius: 8px;
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.historyItem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .historyPositive {
@@ -370,14 +376,15 @@
   border-bottom: 1px solid #eee;
 }
 
-.historyTimestamp {
-  color: #666;
-  font-size: 14px;
+
+.historyTimestamp,
+.historyResult,
+.historyModel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.historyResult {
-  font-size: 14px;
-}
 
 .historyFeatures {
   display: grid;
@@ -391,13 +398,17 @@
   color: #555;
 }
 
+
+
 .historyActions {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
-.loadButton, .deleteButton, .shareButton {
+
+.loadButton, .deleteButton {
   padding: 8px 12px;
   border-radius: 4px;
   font-size: 14px;
@@ -406,6 +417,28 @@
   transition: background-color 0.3s ease;
   border: none;
 }
+
+.shareButton {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 5px;
+}
+
+.loadButton:active,
+.deleteButton:active,
+.shareButton:active,
+.exportCsvButton:active,
+.exportPdfButton:active,
+.clearButton:active {
+  transform: scale(0.97);
+}
+
 
 .loadButton {
   background-color: #007bff;
@@ -596,3 +629,30 @@
   border-color: #4f46e5; /* Indigo */
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
+.progressBarWrapper {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background-color: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.progressLabel {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+

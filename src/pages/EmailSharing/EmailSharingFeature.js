@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from '../../css/EmailSharingFeature.module.css';
+import { motion } from 'framer-motion';
+import { Mail, Send, User, MessageCircle } from 'lucide-react';
 
 const EmailSharingFeature = ({ predictionData }) => {
   const [email, setEmail] = useState('');
@@ -17,21 +19,20 @@ const EmailSharingFeature = ({ predictionData }) => {
     setIsSuccess(false);
 
     try {
-      // Chuẩn bị dữ liệu gửi đi đúng format backend mong muốn
       const predictionResults = {
         features: predictionData.features || [],
-        status: predictionData.prediction === 'Disease Detected' ? 'Disease Detected' : 'Healthy'
+        status: predictionData.prediction === 'Disease Detected' ? 'Disease Detected' : 'Healthy',
       };
 
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/share-results`, {
         recipientEmail: email,
         doctorName: doctorName,
         message: message,
-        predictionResults: predictionResults
+        predictionResults: predictionResults,
       });
 
       if (response.data.status === 'success') {
-        setStatusMessage('Kết quả đã được gửi thành công!');
+        setStatusMessage('✅ Kết quả đã được gửi thành công!');
         setIsSuccess(true);
         setEmail('');
         setDoctorName('');
@@ -41,7 +42,7 @@ const EmailSharingFeature = ({ predictionData }) => {
       }
     } catch (error) {
       console.error('Error sending email:', error);
-      setStatusMessage(`Có lỗi xảy ra khi gửi email: ${error.message}`);
+      setStatusMessage(`❌ Có lỗi xảy ra: ${error.message}`);
       setIsSuccess(false);
     } finally {
       setIsSending(false);
@@ -49,11 +50,23 @@ const EmailSharingFeature = ({ predictionData }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <h3 className={styles.title}>Chia sẻ kết quả với bác sĩ</h3>
+    <motion.div 
+      className={styles.container}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <h3 className={styles.title}>
+        <Send size={20} style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+        Chia sẻ kết quả với bác sĩ
+      </h3>
+
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
-          <label htmlFor="doctorName" className={styles.label}>Tên bác sĩ:</label>
+          <label htmlFor="doctorName" className={styles.label}>
+            <User size={16} style={{ marginRight: '6px' }} />
+            Tên bác sĩ:
+          </label>
           <input
             type="text"
             id="doctorName"
@@ -66,7 +79,10 @@ const EmailSharingFeature = ({ predictionData }) => {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="email" className={styles.label}>Email bác sĩ:</label>
+          <label htmlFor="email" className={styles.label}>
+            <Mail size={16} style={{ marginRight: '6px' }} />
+            Email bác sĩ:
+          </label>
           <input
             type="email"
             id="email"
@@ -79,7 +95,10 @@ const EmailSharingFeature = ({ predictionData }) => {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="message" className={styles.label}>Lời nhắn (không bắt buộc):</label>
+          <label htmlFor="message" className={styles.label}>
+            <MessageCircle size={16} style={{ marginRight: '6px' }} />
+            Lời nhắn (không bắt buộc):
+          </label>
           <textarea
             id="message"
             value={message}
@@ -95,16 +114,21 @@ const EmailSharingFeature = ({ predictionData }) => {
           className={`${styles.button} ${isSending ? styles.buttonDisabled : ''}`}
           disabled={isSending || !predictionData.prediction}
         >
-          {isSending ? 'Đang gửi...' : 'Gửi kết quả'}
+          {isSending ? 'Đang gửi...' : '📤 Gửi kết quả'}
         </button>
       </form>
 
       {statusMessage && (
-        <div className={`${styles.statusMessage} ${isSuccess ? styles.success : styles.error}`}>
+        <motion.div 
+          className={`${styles.statusMessage} ${isSuccess ? styles.success : styles.error}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+        >
           {statusMessage}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

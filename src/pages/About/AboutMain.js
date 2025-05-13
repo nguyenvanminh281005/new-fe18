@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from '../../css/About.module.css';
 import { Activity, ShieldAlert, ArrowDownUp, AlertTriangle, Mic2, PenTool } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 
 const symptoms = [
   {
@@ -65,10 +67,26 @@ const faqs = [
   },
 ];
 
+const FadeInSection = ({ children }) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 });
+
+  return (
+    <motion.section
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
+      className={styles.section}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
 const AboutMain = () => {
   return (
     <div className={styles.aboutContainer}>
-      <section className={styles.section}>
+      <FadeInSection>
         <h2 className={styles.title}>Triệu chứng của bệnh Alzheimer</h2>
         <div className={styles.symptomList}>
           {symptoms.map((symptom, index) => (
@@ -79,27 +97,27 @@ const AboutMain = () => {
             </div>
           ))}
         </div>
-      </section>
+      </FadeInSection>
 
-      <section className={styles.section}>
+      <FadeInSection>
         <h2 className={styles.title}>Quy trình chẩn đoán</h2>
         <ol className={styles.diagnosisList}>
           {steps.map((step, index) => (
             <li key={index} className={styles.diagnosisStep}>{step}</li>
           ))}
         </ol>
-      </section>
+      </FadeInSection>
 
-      <section className={styles.section}>
+      <FadeInSection>
         <h2 className={styles.title}>Phương pháp điều trị</h2>
         <ul className={styles.treatmentList}>
           {treatments.map((treatment, index) => (
             <li key={index} className={styles.treatmentItem}>{treatment}</li>
           ))}
         </ul>
-      </section>
+      </FadeInSection>
 
-      <section className={styles.section}>
+      <FadeInSection>
         <h2 className={styles.title}>Câu hỏi thường gặp</h2>
         <div className={styles.faqList}>
           {faqs.map((faq, index) => (
@@ -111,7 +129,7 @@ const AboutMain = () => {
             </div>
           ))}
         </div>
-      </section>
+      </FadeInSection>
     </div>
   );
 };

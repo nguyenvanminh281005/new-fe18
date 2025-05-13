@@ -16,7 +16,7 @@ function AdviceSection({ features, result, currentUser }) {
 
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/get_advice`, {
         features: features.map(Number),
-        prediction: result,   // <-- Không cần đổi sang 1/0 nữa
+        prediction: result,
         userId: currentUser?.id || null
       });
 

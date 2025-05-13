@@ -11,19 +11,16 @@ import ProfilePopup from '../Profile/ProfilePopup';
 
 const SimpleAbout = ({ currentUser, onOpenPopup }) => {
   return (
-    <div className={styles.simpleAbout}>
-      <div className={styles.ctaSection}>
-        <Link to="/about" className={styles.btnPrimary}>Tìm hiểu thêm</Link>
-        {currentUser ? (
-          <Link to="/dashboard" className={styles.btnSecondary}>Dự đoán ngay</Link>
-        ) : (
-          <button onClick={() => onOpenPopup('login')} className={styles.btnSecondary}>Dự đoán ngay</button>
-        )}
-      </div>
+    <div className={styles.simpleAboutTopLeft}>
+      <Link to="/about" className={styles.btnPrimary}>Tìm hiểu thêm</Link>
+      {currentUser ? (
+        <Link to="/dashboard" className={styles.btnSecondary}>Dự đoán ngay</Link>
+      ) : (
+        <button onClick={() => onOpenPopup('login')} className={styles.btnSecondary}>Dự đoán ngay</button>
+      )}
     </div>
   );
 };
-
 
 function Home() {
   const { currentUser, logout } = useAuth();
@@ -48,7 +45,10 @@ function Home() {
   return (
     <div className={styles.homeContainer}>
       <header className={styles.homeHeader}>
+        <SimpleAbout currentUser={currentUser} onOpenPopup={openPopup} />
+
         <h1>Ứng dụng dự đoán xét nghiệm bệnh Alzheimer</h1>
+
         <div className={styles.authButtons}>
           {!currentUser ? (
             <>
@@ -66,7 +66,6 @@ function Home() {
 
       <main className={styles.homeContent}>
         <HomeContent />
-        <SimpleAbout currentUser={currentUser} onOpenPopup={openPopup} />
       </main>
 
       <footer className={styles.homeFooter}>
