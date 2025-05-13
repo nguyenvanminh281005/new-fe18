@@ -102,10 +102,11 @@
 .homeHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px;
+  justify-content: center; /* Thay đổi từ space-between thành center */
+  padding: 0px;
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  gap: 230px; /* Khoảng cách giữa hai nhóm nút */
 }
 
 .homeHeaderTitle {
@@ -118,7 +119,7 @@
 
 .authButtons {
   display: flex;
-  gap: 10px;
+  max-width: 400px;
 }
 
 .heroSection {
@@ -380,4 +381,5 @@
     font-size: 14px;
   }
 }
+
 
