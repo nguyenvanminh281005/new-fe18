@@ -656,3 +656,130 @@
 }
 
 
+
+/* Input mode selector (radio buttons) */
+.inputModeSelector {
+  margin-bottom: 20px;
+}
+
+.inputModeSelector label {
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* CSV upload section */
+.csvUploadSection {
+  margin-bottom: 20px;
+}
+
+.csvUploadSection p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.csvOptions {
+  margin-bottom: 10px;
+}
+
+.csvOptions label {
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Batch info (e.g., number of samples uploaded) */
+.batchInfo {
+  font-size: 14px;
+  color: #333;
+  margin-top: 10px;
+}
+
+
+/* Batch results section */
+.batchResults {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.batchResults h3 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Table wrapper for scrollable table */
+.tableWrapper {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Results table */
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: #333;
+}
+
+.resultsTable th,
+.resultsTable td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.resultsTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.resultsTable td {
+  background-color: #ffffff;
+}
+
+/* Row styles for prediction results */
+.diseaseRow {
+  background-color: #ffebee;
+}
+
+.healthyRow {
+  background-color: #e8f5e9;
+}
+
+/* Download button for batch results */
+.downloadButton {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.downloadButton:hover {
+  background-color: #218838;
+}
+
+/* Download section */
+.downloadSection {
+  margin-top: 10px;
+}
+
+/* Footer */
+p {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-top: 20px;
+}
