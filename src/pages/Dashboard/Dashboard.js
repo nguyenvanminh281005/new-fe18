@@ -179,7 +179,7 @@ function Dashboard() {
       <Navigation />
       <div className={styles.dashboardContainer}>
         <header className={styles.header}>
-          <h1>Ứng dụng dự đoán xét nghiệm bệnh Parkinson</h1>
+          <h1>Ứng dụng dự đoán xét nghiệm bệnh Alzheimer</h1>
           <div className={styles.userSection}>
             <span>Chào mừng trở lại, {currentUser.email}</span>
           </div>
