@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import styles from '../../../css/Dashboard.module.css';
 
 // Giới hạn tối đa cho mỗi feature (ví dụ giả định)
-const featureMaxValues = [10, 30, 10, 5, 5, 40, 1, 300];
+const featureMaxValues = [10, 30, 10, 5, 5, 40, 1, 300,100,100];
 
 const featureDescriptions = [
   'Khiếu nại về trí nhớ (Memory Complaints)',                            // MemoryComplaints
