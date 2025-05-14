@@ -32,7 +32,7 @@ function Dashboard() {
 
   useEffect(() => {
     // Load feature names from CSV
-    fetch("/new_ver.csv")
+    fetch("/alzheimer_done.csv")
       .then((response) => response.text())
       .then((text) => {
         const rows = text.trim().split("\n").map(row => row.split(","));
