@@ -13,7 +13,7 @@ import AdviceSection from './components/AdviceSection';
 import EmailSharingFeature from '../EmailSharing/EmailSharingFeature';
 
 function Dashboard() {
-  const num = 8;
+  const num = 10;
   const [features, setFeatures] = useState(Array(num).fill(''));
   const [featureNames, setFeatureNames] = useState(Array(num).fill(`F`));
   const [result, setResult] = useState('');

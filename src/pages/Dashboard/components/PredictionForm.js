@@ -6,15 +6,18 @@ import styles from '../../../css/Dashboard.module.css';
 const featureMaxValues = [10, 30, 10, 5, 5, 40, 1, 300];
 
 const featureDescriptions = [
-  'Khả năng thực hiện các hoạt động sinh hoạt hàng ngày',
-  'Điểm kiểm tra trạng thái nhận thức',
-  'Đánh giá chức năng sống độc lập',
-  'Mức độ mất phương hướng về thời gian và không gian',
-  'Thay đổi tính cách hoặc hành vi',
-  'Thói quen hút thuốc lá (có/không hoặc số năm hút)',
-  'Tiền sử chấn thương đầu (có/không)',
-  'Mức cholesterol toàn phần trong máu (mg/dL)',
+  'Khiếu nại về trí nhớ (Memory Complaints)',                            // MemoryComplaints
+  'Vấn đề về hành vi (Behavioral Problems)',                            // BehavioralProblems
+  'Khả năng thực hiện các hoạt động sinh hoạt hàng ngày (ADL)',         // ADL
+  'Điểm kiểm tra trạng thái nhận thức (MMSE)',                          // MMSE
+  'Đánh giá chức năng sống độc lập (Functional Assessment)',            // FunctionalAssessment
+  'Mức độ mất phương hướng về thời gian và không gian (Disorientation)',// Disorientation
+  'Thay đổi tính cách hoặc hành vi (Personality Changes)',              // PersonalityChanges
+  'Thói quen hút thuốc lá (có/không hoặc số năm hút) (Smoking)',        // Smoking
+  'Tiền sử chấn thương đầu (có/không) (Head Injury)',                   // HeadInjury
+  'Mức cholesterol toàn phần trong máu (mg/dL) (Cholesterol Total)',    // CholesterolTotal
 ];
+
 
 function PredictionForm({ 
   features, 
