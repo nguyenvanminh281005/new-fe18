@@ -43,8 +43,8 @@ function PredictionForm({
         >
           <option value="best_model">Best Model</option>
           <option value="xgboost_lib">XGBoost Lib</option>
-          <option value="random_forest_lib">Random Forest Lib</option>
           <option value="xgboost_scr">XGBoost Scr</option>
+          <option value="random_forest_lib">Random Forest Lib</option>
           <option value="random_forest_scr">Random Forest Scr</option>
         </select>
       </div>
