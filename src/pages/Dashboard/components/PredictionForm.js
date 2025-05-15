@@ -4,7 +4,7 @@ import axios from 'axios';
 import styles from '../../../css/Dashboard.module.css';
 import Papa from 'papaparse';
 
-const featureMaxValues = [10, 30, 10, 5, 5, 40, 1, 300, 100, 100];
+const featureMaxValues = [1, 12, 30, 20, 1, 1, 1, 1, 1, 400];
 
 const featureDescriptions = [
   'Khiếu nại về trí nhớ (Memory Complaints)',
